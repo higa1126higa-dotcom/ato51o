@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>楽集発表会　理科学習動画メニュー</title>
+<style>
+  :root { color-scheme: light; --ink:#203047; --muted:#66758a; --blue:#2867b2; --line:#dce5ef; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink); background: linear-gradient(135deg,#eef5fb,#f8fafc 55%,#e9f2f7);
+    display: flex; align-items: center; justify-content: center; padding: 12px;
+  }
+  main { width: min(1200px, 96vw); }
+  .panel {
+    background: #fff; border: 1px solid var(--line); border-radius: 20px;
+    box-shadow: 0 12px 36px rgba(31,55,82,.10); padding: 20px 24px;
+  }
+  .eyebrow { color: var(--blue); font-weight: 700; letter-spacing: .12em; font-size: .8rem; text-align: center; margin-bottom: 2px; }
+  h1 { margin: 0 0 14px; font-size: clamp(1.5rem, 3vw, 2.1rem); text-align: center; }
+  
+  .grades-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  
+  .grade-box {
+    background: #f4f8fc;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .grade-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 4px;
+    text-align: center;
+  }
+  
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .item:hover {
+    border-color: var(--blue);
+    background: #f0f7ff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(40,103,178,.1);
+  }
+  .title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .title { font-weight: 650; font-size: 0.95rem; color: var(--ink); line-height: 1.3; }
+  .highlight { color: #d93025; font-weight: 800; }
+  .duration { font-size: 0.8rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+  .play-badge {
+    background: var(--blue); color: white; padding: 5px 12px;
+    border-radius: 999px; font-weight: 700; font-size: 0.78rem;
+    white-space: nowrap; flex-shrink: 0; margin-left: 8px;
+  }
+  
+  #playerView { display: none; }
+  .player-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 12px; }
+  .player-head h2 { margin: 0; font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+  .back {
+    background: #eaf1f8; color: #31516f; border: 0; border-radius: 999px;
+    padding: 8px 18px; font: inherit; font-weight: 700; cursor: pointer; font-size: 0.9rem;
+  }
+  .back:hover { background: #dbe7f4; }
+  .iframe-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .player-note { color: var(--muted); font-size: 0.85rem; margin: 8px 2px 0; text-align: center; }
+
+  @media (max-width: 768px) {
+    body { padding: 8px; }
+    .grades-container { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <!-- メニュー画面 -->
+  <section id="menuView" class="panel">
+    <div class="eyebrow">SCIENCE VIDEO LIBRARY</div>
+    <h1>楽集発表会　理科学習動画メニュー</h1>
+    
+    <div class="grades-container">
+      <!-- 1年 -->
+      <div class="grade-box">
+        <div class="grade-title">1年生</div>
+        <div class="items">
+          <article class="item" onclick="playDriveVideo(0)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">ガスバーナー</span>をつけてみよう</span>
+              <span class="duration">1:45</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(1)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">物質XとYの正体</span>をつかめ！！</span>
+              <span class="duration">3:45</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2年 -->
+      <div class="grade-box">
+        <div class="grade-title">2年生</div>
+        <div class="items">
+          <article class="item" onclick="playDriveVideo(2)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">植物のからだ</span>のしくみ</span>
+              <span class="duration">3:58</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(3)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">人のからだ</span>のしくみ</span>
+              <span class="duration">3:57</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(4)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">霧</span>や<span class="highlight">雲</span>、<span class="highlight">雨</span>ができるしくみ</span>
+              <span class="duration">3:06</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 3年 -->
+      <div class="grade-box">
+        <div class="grade-title">3年生</div>
+        <div class="items">
+          <article class="item" onclick="playDriveVideo(5)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">植物や動物の生殖</span>について</span>
+              <span class="duration">4:53</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(6)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">無性生殖</span>について</span>
+              <span class="duration">2:25</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(7)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">生物の生殖</span>について</span>
+              <span class="duration">2:53</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(8)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">細胞分裂</span>について</span>
+              <span class="duration">2:49</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(9)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">遺伝</span>について</span>
+              <span class="duration">1:51</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+          <article class="item" onclick="playDriveVideo(10)">
+            <div class="title-group">
+              <span class="title"><span class="highlight">生物の進化</span>について</span>
+              <span class="duration">7:22</span>
+            </div>
+            <div class="play-badge">再生</div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- プレーヤー画面 -->
+  <section id="playerView" class="panel">
+    <div class="player-head">
+      <h2 id="playingTitle">動画を再生中</h2>
+      <button class="back" id="backButton" onclick="returnToMenu()">メニューに戻る</button>
+    </div>
+    <div class="iframe-container">
+      <iframe id="videoIframe" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+    </div>
+    <p class="player-note">Enterキーまたは「メニューに戻る」ボタンを押すとメニューへ戻ります。</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const videoData = [
+    { title: "ガスバーナーをつけてみよう", url: "https://drive.google.com/file/d/1BDCjOXzhNxtIWFPcYzEO-qaerOrwODQq/preview" },
+    { title: "物質XとYの正体をつかめ！！", url: "https://drive.google.com/file/d/1PNYL3pzUe2UorDaAoLAMhaX2pSwd-E2S/preview" },
+    { title: "植物のからだのしくみ", url: "https://drive.google.com/file/d/1imWpetqvXHxO7lAgCAxNDnFXFWoCSAy2/preview" },
+    { title: "人のからだのしくみ", url: "https://drive.google.com/file/d/1PXmn1L0Uc1MKEHskAelypdx9uca2SUe1/preview" },
+    { title: "霧や雲、雨ができるしくみ", url: "https://drive.google.com/file/d/1Zcu95-BepA10NRC_RYeuGXA0GB32OXXT/preview" },
+    { title: "植物や動物の生殖について", url: "https://drive.google.com/file/d/1phNLwEUS2gvNLiUByRPD9-KT-qnr1m_P/preview" },
+    { title: "無性生殖について", url: "https://drive.google.com/file/d/1KQrpIfwKYUN1yg8wBdHotlGzxEeZaxoP/preview" },
+    { title: "生物の生殖について", url: "https://drive.google.com/file/d/1GKvxN0OhTwTsEbt4yo4AOPKno9YIweD0/preview" },
+    { title: "細胞分裂について", url: "https://drive.google.com/file/d/1fdWlU05Fbh_KtETCiMR-fuJkn9Vddfg2/preview" },
+    { title: "遺伝について", url: "https://drive.google.com/file/d/1q6qKwef1XVMfAZ6xzQNlNqIZzhIt6Hpi/preview" },
+    { title: "生物の進化について", url: "https://drive.google.com/file/d/1znPOerqKziOwWkhwma3vjliB8ZzNtuuR/preview" }
+  ];
+
+  const menuView = document.getElementById("menuView");
+  const playerView = document.getElementById("playerView");
+  const iframe = document.getElementById("videoIframe");
+  const playingTitle = document.getElementById("playingTitle");
+
+  window.playDriveVideo = (index) => {
+    const item = videoData[index];
+    if (!item) return;
+
+    playingTitle.textContent = item.title;
+    iframe.src = item.url;
+    
+    menuView.style.display = "none";
+    playerView.style.display = "block";
+  };
+
+  window.returnToMenu = () => {
+    iframe.src = "about:blank";
+    playerView.style.display = "none";
+    menuView.style.display = "block";
+  };
+
+  // キー入力制御（EnterキーまたはEscapeキーで戻る）
+  document.addEventListener("keydown", (event) => {
+    if (playerView.style.display === "block") {
+      if (event.key === "Enter" || event.key === "Escape") {
+        event.preventDefault();
+        window.returnToMenu();
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
